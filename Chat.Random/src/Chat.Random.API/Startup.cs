@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Chat.Random.Service.Middleware;
+using Chat.Random.Service.Match;
 
 namespace Chat.Random.API
 {
@@ -29,6 +31,7 @@ namespace Chat.Random.API
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<ChatMatchManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +50,16 @@ namespace Chat.Random.API
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+                ReceiveBufferSize = 4 * 1024
+            };
+
+            app.UseWebSockets(webSocketOptions);
+
+            app.UseMiddleware<WebsocketMiddleware>();
+            
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/js/webrtc.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <title>WebRTC Simple Video-Chat</title>
+</head>
+
+<body>
+    <video id="remoteVideo" autoplay></video>
+    <video id="localVideo" autoplay muted></video>
+    <input id="videoCallButton" type="button" disabled value="Start" />
+    <input id="endCallButton" type="button" disabled value="Stop" />
+    <script>window.addEventListener("load", pageReady);</script>
+</body>
+</html>

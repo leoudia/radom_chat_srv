@@ -12,7 +12,10 @@ namespace Chat.Random.API
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseKestrel()
+                .UseUrls("https://*:5000")
+                .UseKestrel(options => {
+                    options.UseHttps("chatvideo.com.br.pfx", "10203040");
+                })
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
